@@ -1,12 +1,13 @@
-from flask import Flask, render_template, jsonify, request
-from pathlib import Path
+from flask import Flask, jsonify, render_template
 import os
 
-# Create Flask app
+# Initialize Flask app
 app = Flask(__name__)
-# Set the template and static folder locations relative to this file
-app.template_folder = Path(__file__).parent.parent / "templates"
-app.static_folder = Path(__file__).parent.parent / "static"
+
+# Set paths for templates and static files
+app.template_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'templates'))
+app.static_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static'))
+app.static_url_path = '/static'
 
 # Define a sample 5x5 mini crossword
 PUZZLE_DATA = {
@@ -66,19 +67,32 @@ PUZZLE_DATA = {
     ]
 }
 
-@app.route("/")
+@app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template('index.html')
 
-@app.route("/api/puzzle", methods=["GET"])
+@app.route('/api/puzzle', methods=['GET'])
 def get_puzzle():
     return jsonify(PUZZLE_DATA)
 
-@app.route("/<path:path>")
+@app.route('/<path:path>')
 def catch_all(path):
-    return render_template("index.html")
+    return render_template('index.html')
 
-# This function will be called by Vercel
-def handler(request):
-    """Handle a request to the Flask app."""
-    return app(request) 
+# For local development
+if __name__ == '__main__':
+    app.run(debug=True)
+    
+# Make the app directly importable
+from app import app as flask_app
+
+# This route is specifically for Vercel serverless
+@app.route('/api/index', methods=['GET', 'POST'])
+def api_index():
+    return jsonify({"status": "API is running"})
+
+# Vercel serverless function handler
+def handler(request, context):
+    # Process the request through Flask
+    with app.request_context(request):
+        return app.dispatch_request() 
