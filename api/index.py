@@ -79,20 +79,11 @@ def get_puzzle():
 def catch_all(path):
     return render_template('index.html')
 
-# For local development
-if __name__ == '__main__':
-    app.run(debug=True)
-    
-# Make the app directly importable
-from app import app as flask_app
-
 # This route is specifically for Vercel serverless
 @app.route('/api/index', methods=['GET', 'POST'])
 def api_index():
     return jsonify({"status": "API is running"})
 
-# Vercel serverless function handler
-def handler(request, context):
-    # Process the request through Flask
-    with app.request_context(request):
-        return app.dispatch_request() 
+# For local development
+if __name__ == '__main__':
+    app.run(debug=True) 
