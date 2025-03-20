@@ -1,7 +1,12 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
+from pathlib import Path
 import os
 
+# Create Flask app
 app = Flask(__name__)
+# Set the template and static folder locations relative to this file
+app.template_folder = Path(__file__).parent.parent / "templates"
+app.static_folder = Path(__file__).parent.parent / "static"
 
 # Define a sample 5x5 mini crossword
 PUZZLE_DATA = {
@@ -62,7 +67,7 @@ PUZZLE_DATA = {
 }
 
 @app.route("/")
-def index():
+def home():
     return render_template("index.html")
 
 @app.route("/api/puzzle", methods=["GET"])
@@ -73,9 +78,7 @@ def get_puzzle():
 def catch_all(path):
     return render_template("index.html")
 
-# This is for Vercel serverless deployment
-app.debug = False
-
-# Vercel handler
-def handler(environ, start_response):
-    return app.wsgi_app(environ, start_response) 
+# This function will be called by Vercel
+def handler(request):
+    """Handle a request to the Flask app."""
+    return app(request) 
