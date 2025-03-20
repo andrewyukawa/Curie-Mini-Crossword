@@ -9,61 +9,53 @@ app.template_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '.
 app.static_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static'))
 app.static_url_path = '/static'
 
-# Define a sample 5x5 mini crossword
+# Define a 5x5 mini crossword with the new puzzle data
 PUZZLE_DATA = {
     "size": 5,
     "grid": [
-        ["", "", "", "#", ""],
         ["", "", "", "", ""],
+        ["", "#", "", "#", ""],
         ["", "", "", "", ""],
-        ["", "", "", "", ""],
-        ["", "#", "", "", ""]
+        ["", "#", "", "#", ""],
+        ["", "", "", "", ""]
     ],
     "answers": {
         "across": {
-            "1": "HELLO",
-            "5": "WORLD",
-            "7": "CODE",
-            "8": "WEB",
-            "9": "API"
+            "1": "ACUTE",
+            "4": "PRIMO",
+            "5": "EDEMA"
         },
         "down": {
-            "1": "HACKER",
-            "2": "LOGIC",
-            "3": "DEMO",
-            "4": "DEV",
-            "6": "BOT"
+            "1": "APPLE",
+            "2": "URINE",
+            "3": "EBOLA"
         }
     },
     "clues": {
         "across": {
-            "1": "Standard greeting",
-            "5": "The globe or planet Earth",
-            "7": "What developers write",
-            "8": "The internet, colloquially",
-            "9": "Interface for applications to interact"
+            "1": "Opposite of chronic (5)",
+            "4": "Excellent or of the best quality (5)",
+            "5": "Excess fluid accumulation (5)"
         },
         "down": {
-            "1": "Problem-solver who loves coding",
-            "2": "Reasoning that's structured and valid",
-            "3": "A presentation of software capabilities",
-            "4": "Short for developer",
-            "6": "Automated software agent"
+            "1": "One of these a day keeps the doctor away (5)",
+            "2": "A common fluid sample (5)",
+            "3": "An African-named virus (5)"
         }
     },
     "gridnums": [
-        [1, 2, 3, 0, 4],
-        [5, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [7, 0, 0, 0, 0],
-        [8, 0, 9, 0, 0]
+        [1, 0, 2, 0, 3],
+        [0, "#", 0, "#", 0],
+        [4, 0, 0, 0, 0],
+        [0, "#", 0, "#", 0],
+        [5, 0, 0, 0, 0]
     ],
     "solution": [
-        ["H", "E", "L", "#", "D"],
-        ["W", "O", "R", "L", "D"],
-        ["A", "G", "I", "O", "E"],
-        ["C", "O", "D", "E", "V"],
-        ["W", "#", "A", "P", "I"]
+        ["A", "C", "U", "T", "E"],
+        ["P", "#", "R", "#", "B"],
+        ["P", "R", "I", "M", "O"],
+        ["L", "#", "N", "#", "L"],
+        ["E", "D", "E", "M", "A"]
     ]
 }
 
